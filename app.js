@@ -10,6 +10,7 @@ const app = express()
 // Middleware to add the data from the body to the request object
 app.use(morgan('dev'))
 app.use(express.json())
+app.use(express.static(`${__dirname}/public`))
 
 app.use((req, res, next) => {
     console.log('Hello from the middleware')
