@@ -11,12 +11,14 @@ const signToken = id => {
 }
 
 exports.signup = catchAsync(async (req, res, next) => {
+    const { name, email, password, passwordConfirm, passwordChangedAt, role } = req.body
     const newUser = await User.create({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        passwordConfirm: req.body.passwordConfirm,
-        passwordChangedAt: req.body.passwordChangedAt,
+        name,
+        email,
+        password,
+        passwordConfirm,
+        passwordChangedAt,
+        role,
     })
 
     const token = signToken(newUser._id)
@@ -82,3 +84,15 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.user = currentUser
     next()
 })
+
+// Since we cannot pass arguments into a MW we can use a wrapper function in order to send the parameters into the MW
+exports.restrictTo = (...roles) => {
+    return (req, res, next) => {
+        // roles ['admin', 'lead-guide']
+        if (!roles.includes(req.user.role)) {
+            return next(new AppError('You do not have permission to perform this action', 403))
+        }
+
+        next()
+    }
+}
