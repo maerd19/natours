@@ -13,6 +13,7 @@ router
     .route('/top-5-cheap')
     .get(tourController.aliasTopTours, tourController.getAllTours)
 
+router.route('/tour-stats').get(tourController.getTourStats)
 router
     .route('/monthly-plan/:year')
     .get(authController.protect,
@@ -21,8 +22,10 @@ router
     )
 
 router
-    .route('/tour-stats')
-    .get(tourController.getTourStats)
+    .route('/tours-within/:distance/center/:latlng/unit/:unit')
+    .get(tourController.getToursWithin)
+// /tours-distance?distance=233&center=-40,45&unit=mi
+// /tours-distance/233/center/-40,45/unit/mi
 
 router
     .route('/')
