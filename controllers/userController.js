@@ -71,7 +71,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     if (req.file) filteredBody.photo = req.file.filename
 
     // 2) Update user document
-    console.log({filteredBody})
+    // console.log({filteredBody})
     const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
         new: true, runValidators: true
     })
