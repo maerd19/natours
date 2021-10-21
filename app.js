@@ -21,7 +21,7 @@ const compression = require('compression')
 // Start express app
 const app = express()
 
-app.enable('trust proxy')
+// app.enable('trust proxy')
 
 // Tell Express what template engine we are going to use
 app.set('view engine', 'pug')
